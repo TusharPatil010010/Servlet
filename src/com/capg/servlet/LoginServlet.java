@@ -25,13 +25,20 @@ public class LoginServlet extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Getting request parameters
 		String user = request.getParameter("user");
+		String nameRegex = "^[A-Z]{1}[a-zA-Z\\s]{2,}$";
 		String password = request.getParameter("password");
 		
 		//getting servlet confg init parameters
 		String userID = getServletConfig().getInitParameter("user");
 		String checkPassword = getServletConfig().getInitParameter("password");
 		
-		if(userID.equals(user) && checkPassword.equals(password)) {
+		if(!user.matches(nameRegex)) {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
+			PrintWriter out = response.getWriter();
+			out.println("<font color = red>Name must start with capital letter and should have more than 3 letters!!</font>");
+			rd.include(request, response);
+		}
+		else if(userID.equals(user) && checkPassword.equals(password)) {
 			request.setAttribute("user", user);
 			request.getRequestDispatcher("LoginSuccess.jsp").forward(request, response);
 		}

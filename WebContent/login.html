@@ -3,12 +3,13 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Login Page</title>
+<link rel = "stylesheet" href = "login.css">
 </head>
 <body>
-	<form action="LoginServlet" method="post">
-		Username: <input type="text" name="user"><br>
-		Password: <input type="password" name="password"><br>
-		<input type="submit" value="login"> 
+	<form id="form" action="LoginServlet" method="post">
+		<input class="input" type="text" name="user" id="user" placeholder="Username"><br>
+		<input class="input" type="password" name="password" id="password" placeholder="Password"><br>
+		<button type = "submit" class = "button" id = "submitButton" onclick="validate()">Submit</button>
 	</form>
 </body>
 </html>
