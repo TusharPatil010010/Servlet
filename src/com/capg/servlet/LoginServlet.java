@@ -27,6 +27,7 @@ public class LoginServlet extends HttpServlet{
 		String user = request.getParameter("user");
 		String nameRegex = "^[A-Z]{1}[a-zA-Z\\s]{2,}$";
 		String password = request.getParameter("password");
+		String passRegex = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[@$!%*#?&])[A-Za-z\\d@$!%*#?&]{8,}$";
 		
 		//getting servlet confg init parameters
 		String userID = getServletConfig().getInitParameter("user");
@@ -41,6 +42,12 @@ public class LoginServlet extends HttpServlet{
 		else if(userID.equals(user) && checkPassword.equals(password)) {
 			request.setAttribute("user", user);
 			request.getRequestDispatcher("LoginSuccess.jsp").forward(request, response);
+		}
+		else if(!password.matches(passRegex)) {
+			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
+			PrintWriter out = response.getWriter();
+			out.println("<font color=red>Password criteria not met</font>");
+			rd.include(request, response);
 		}
 		else {
 			RequestDispatcher rd = getServletContext().getRequestDispatcher("/login.html");
